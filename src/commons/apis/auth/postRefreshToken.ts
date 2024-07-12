@@ -1,15 +1,14 @@
 import { axiosBasic } from "..";
-import { ILoginInput } from "../../types/auth/loginInput";
 
-export const postRefreshToken = async (refreshToken: string) => {
+export const postRefreshToken = async () => {
   try {
     const res = await axiosBasic({
       method: "post",
-      url: "/auth/refresh",
-      data: refreshToken,
+      url: "/api/auth/refresh",
       headers: {
         "Content-Type": "text/plain",
       },
+      withCredentials: true,
     });
     const resData = res.data;
     return resData;

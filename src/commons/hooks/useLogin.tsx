@@ -26,6 +26,7 @@ export const useLogin = () => {
       queryClient.setQueryData(REACT_QUERY_KEY.accessToken, accessToken);
       queryClient.setQueryData(REACT_QUERY_KEY.refreshToken, refreshToken);
       queryClient.setQueryData(REACT_QUERY_KEY.userInfo, userInfo);
+      localStorage.setItem("access_token", accessToken);
       // setCookie("accessToken", accessToken, {
       //   path: "/",
       //   maxAge: ACCESS_TOKEN_MAX_AGE,
@@ -49,19 +50,19 @@ export const useLogin = () => {
   });
 
   const refreshTokenMutation = useMutation({
-    mutationFn: () => postRefreshToken(cookies.refreshToken),
+    mutationFn: () => postRefreshToken(),
     onSuccess: (resData) => {
-      const { accessToken, refreshToken } = resData;
+      const { accessToken } = resData;
       queryClient.setQueryData(REACT_QUERY_KEY.accessToken, accessToken);
-      queryClient.setQueryData(REACT_QUERY_KEY.refreshToken, refreshToken);
-      setCookie("accessToken", accessToken, {
-        path: "/",
-        maxAge: ACCESS_TOKEN_MAX_AGE,
-      });
-      setCookie("refreshToken", refreshToken, {
-        path: "/",
-        maxAge: REFRESH_TOKEN_MAX_AGE,
-      });
+      // queryClient.setQueryData(REACT_QUERY_KEY.refreshToken, refreshToken);
+      // setCookie("accessToken", accessToken, {
+      //   path: "/",
+      //   maxAge: ACCESS_TOKEN_MAX_AGE,
+      // });
+      // setCookie("refreshToken", refreshToken, {
+      //   path: "/",
+      //   maxAge: REFRESH_TOKEN_MAX_AGE,
+      // });
     },
   });
 

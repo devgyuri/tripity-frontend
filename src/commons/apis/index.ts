@@ -18,13 +18,12 @@ export const axiosAccessFunc = () => {
     headers: {
       "Content-Type": "application/json",
     },
-    withCredentials: true,
   });
 
   axiosAccess.interceptors.request.use(
-    async (config) => {
+    (config) => {
       try {
-        const accessToken = await cookies.get("access_token");
+        const accessToken = localStorage.getItem("access_token");
         if (accessToken) {
           config.headers.Authorization = `Bearer ${accessToken}`;
         }
@@ -37,5 +36,35 @@ export const axiosAccessFunc = () => {
       return Promise.reject(error);
     }
   );
+
+  axiosAccess.interceptors.response.use(
+    (response) => {
+      return response;
+    },
+    async (error) => {
+      const {
+        config,
+        response: { status },
+      } = error;
+      if (status === 401) {
+        const originalRequest = config;
+        return axios
+          .post("http://localhost:8080/api/auth/token", {})
+          .then((res) => {
+            const { accessToken: newAccessToken } = res.data;
+            localStorage.setItem("access_token", newAccessToken);
+            originalRequest.headers.authorization = `Bearer ${newAccessToken}`;
+            return axios(originalRequest);
+          })
+          .catch(() => {
+            localStorage.removeItem("access_token");
+            return false;
+          });
+      } else {
+        return Promise.reject(error);
+      }
+    }
+  );
+
   return axiosAccess;
 };

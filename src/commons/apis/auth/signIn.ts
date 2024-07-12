@@ -5,7 +5,7 @@ export const signIn = async (formData: ILoginInput) => {
   try {
     const res = await axiosBasic({
       method: "post",
-      url: "/login",
+      url: "/api/auth/login",
       data: formData,
     });
     const resData = res.data;
