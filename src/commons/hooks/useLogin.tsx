@@ -1,31 +1,26 @@
 import { useMutation, useQueryClient } from "react-query";
 import { ILoginInput } from "../types/auth/loginInput";
-import { signIn } from "../apis/auth/signIn";
+import { logIn } from "../apis/auth/logIn";
 import { REACT_QUERY_KEY } from "../constant/reqctQueryKey";
-import { useCookies } from "react-cookie";
-import {
-  ACCESS_TOKEN_MAX_AGE,
-  REFRESH_TOKEN_MAX_AGE,
-} from "../constant/cookieMaxAge";
-import { IUserInfo } from "../types/auth/userInfo";
 import { useSetRecoilState } from "recoil";
 import { postRefreshToken } from "../apis/auth/postRefreshToken";
 import { userInfoState } from "../stores/userInfoState";
+import { loginState } from "../stores/loginState";
 
 export const useLogin = () => {
-  const [cookies, setCookie] = useCookies();
   const queryClient = useQueryClient();
   const setUserInfo = useSetRecoilState(userInfoState);
+  const setLoginState = useSetRecoilState(loginState);
 
   const loginMutation = useMutation({
-    mutationFn: (data: ILoginInput) => signIn(data),
+    mutationFn: (data: ILoginInput) => logIn(data),
     onSuccess: (data) => {
-      const { accessToken, refreshToken, userInfo } = data;
+      const { accessToken, userInfo } = data;
       queryClient.setQueryData(REACT_QUERY_KEY.accessToken, accessToken);
-      queryClient.setQueryData(REACT_QUERY_KEY.refreshToken, refreshToken);
       queryClient.setQueryData(REACT_QUERY_KEY.userInfo, userInfo);
       localStorage.setItem("access_token", accessToken);
       setUserInfo(userInfo);
+      setLoginState(true);
       // setCookie("accessToken", accessToken, {
       //   path: "/",
       //   maxAge: ACCESS_TOKEN_MAX_AGE,
