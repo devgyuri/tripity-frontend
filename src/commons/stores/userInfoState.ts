@@ -1,13 +1,13 @@
 import { atom } from "recoil";
-import { ILoginUserInfo } from "../types/auth/loginUserInfo";
+import { IUserInfo } from "../types/auth/userInfo";
 import { recoilPersist } from "recoil-persist";
 
 const { persistAtom } = recoilPersist({
-  key: "loginUserInfoState",
+  key: "userInfoState",
 });
 
-export const loginUserInfoState = atom<ILoginUserInfo>({
-  key: "loginUserInfoState",
+export const userInfoState = atom<IUserInfo>({
+  key: "userInfoState",
   default: {
     id: null,
     // role: null,

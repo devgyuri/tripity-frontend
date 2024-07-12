@@ -7,6 +7,7 @@ export const signIn = async (formData: ILoginInput) => {
       method: "post",
       url: "/api/auth/login",
       data: formData,
+      withCredentials: true,
     });
     const resData = res.data;
     return resData;

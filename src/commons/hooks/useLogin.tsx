@@ -7,26 +7,25 @@ import {
   ACCESS_TOKEN_MAX_AGE,
   REFRESH_TOKEN_MAX_AGE,
 } from "../constant/cookieMaxAge";
-import { ILoginUserInfo } from "../types/auth/loginUserInfo";
+import { IUserInfo } from "../types/auth/userInfo";
 import { useSetRecoilState } from "recoil";
-import { loginUserInfoState } from "../stores/loginUserInfoState";
 import { postRefreshToken } from "../apis/auth/postRefreshToken";
+import { userInfoState } from "../stores/userInfoState";
 
 export const useLogin = () => {
   const [cookies, setCookie] = useCookies();
   const queryClient = useQueryClient();
-  const setUserInfo = useSetRecoilState(loginUserInfoState);
+  const setUserInfo = useSetRecoilState(userInfoState);
 
   const loginMutation = useMutation({
     mutationFn: (data: ILoginInput) => signIn(data),
     onSuccess: (data) => {
-      // console.log("로그인 시도");
-      // console.log("data: ", data);
       const { accessToken, refreshToken, userInfo } = data;
       queryClient.setQueryData(REACT_QUERY_KEY.accessToken, accessToken);
       queryClient.setQueryData(REACT_QUERY_KEY.refreshToken, refreshToken);
       queryClient.setQueryData(REACT_QUERY_KEY.userInfo, userInfo);
       localStorage.setItem("access_token", accessToken);
+      setUserInfo(userInfo);
       // setCookie("accessToken", accessToken, {
       //   path: "/",
       //   maxAge: ACCESS_TOKEN_MAX_AGE,
@@ -35,7 +34,7 @@ export const useLogin = () => {
       //   path: "/",
       //   maxAge: REFRESH_TOKEN_MAX_AGE,
       // });
-      // const userInfo: ILoginUserInfo = {
+      // const userInfo: IUserInfo = {
       //   ...userResponse,
       // };
       // setCookie("userInfo", JSON.stringify(userInfo), {

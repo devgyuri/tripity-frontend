@@ -1,4 +1,4 @@
-export interface ILoginUserInfo {
+export interface IUserInfo {
   readonly id: null | string;
   // readonly profileImage: null | string;
   // readonly role: null | string;

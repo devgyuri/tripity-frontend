@@ -46,10 +46,16 @@ export const axiosAccessFunc = () => {
         config,
         response: { status },
       } = error;
-      if (status === 401) {
+      console.log("+++++ axios access +++++");
+      console.log(status);
+      if (status === 403 && cookies.get("refresh_token")) {
         const originalRequest = config;
         return axios
-          .post("http://localhost:8080/api/auth/token", {})
+          .post(
+            "http://localhost:8080/api/auth/token",
+            {},
+            { withCredentials: true }
+          )
           .then((res) => {
             const { accessToken: newAccessToken } = res.data;
             localStorage.setItem("access_token", newAccessToken);
