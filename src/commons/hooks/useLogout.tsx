@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from "react-query";
 import { useSetRecoilState } from "recoil";
 import { userInfoState } from "../stores/userInfoState";
 import { logOut } from "../apis/auth/logout";
-import { REACT_QUERY_KEY } from "../constant/reqctQueryKey";
+import { REACT_QUERY_KEY } from "../constant/reactQueryKey";
 import { loginState } from "../stores/loginState";
 
 export const useLogout = () => {

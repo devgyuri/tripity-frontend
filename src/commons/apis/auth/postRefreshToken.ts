@@ -4,7 +4,7 @@ export const postRefreshToken = async () => {
   try {
     const res = await axiosBasic({
       method: "post",
-      url: "/api/auth/refresh",
+      url: "/api/auth/token",
       headers: {
         "Content-Type": "text/plain",
       },

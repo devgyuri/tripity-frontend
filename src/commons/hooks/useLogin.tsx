@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from "react-query";
 import { ILoginInput } from "../types/auth/loginInput";
 import { logIn } from "../apis/auth/logIn";
-import { REACT_QUERY_KEY } from "../constant/reqctQueryKey";
+import { REACT_QUERY_KEY } from "../constant/reactQueryKey";
 import { useSetRecoilState } from "recoil";
 import { postRefreshToken } from "../apis/auth/postRefreshToken";
 import { userInfoState } from "../stores/userInfoState";
