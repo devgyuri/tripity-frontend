@@ -6,9 +6,11 @@ import { useLogout } from "../src/commons/hooks/useLogout";
 import Link from "next/link";
 
 export default function Home() {
-  const API_BASE_URI = process.env.NEXT_PUBLIC_GOOGLE_API_URL;
+  const API_BASE_URI = process.env.NEXT_PUBLIC_API_BASE_URL;
   const OAUTH2_REDIRECT_URI = process.env.NEXT_PUBLIC_SNS_REDIRECT_URI;
-  const GOOGLE_AUTH_URL = `${API_BASE_URI}/authorization/google?redirect_uri=${OAUTH2_REDIRECT_URI}`;
+  const GOOGLE_AUTH_URL = `${API_BASE_URI}/authorization/google?redirect_uri=${OAUTH2_REDIRECT_URI}/google`;
+  const NAVER_AUTH_URL = `${API_BASE_URI}/authorization/google?redirect_uri=${OAUTH2_REDIRECT_URI}/naver`;
+  const KAKAO_AUTH_URL = `${API_BASE_URI}/authorization/google?redirect_uri=${OAUTH2_REDIRECT_URI}/kakao`;
 
   const [message, setMessage] = useState("");
   const { logoutMutation } = useLogout();
@@ -40,6 +42,8 @@ export default function Home() {
       <button onClick={onClickLogout}>Logout</button>
 
       <Link href={GOOGLE_AUTH_URL}>Google Login</Link>
+      <Link href={NAVER_AUTH_URL}>Naver Login</Link>
+      <Link href={KAKAO_AUTH_URL}>Kakao Login</Link>
     </>
   );
 }

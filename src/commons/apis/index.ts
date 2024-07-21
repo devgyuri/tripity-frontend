@@ -44,11 +44,15 @@ export const axiosAccessFunc = () => {
     async (error) => {
       const {
         config,
-        response: { status },
+        response: {
+          status,
+          data: { name },
+        },
       } = error;
       console.log("+++++ axios access +++++");
       console.log(status);
-      if (status === 403 && cookies.get("refresh_token")) {
+      console.log(error);
+      if (status === 401 && name === "EXPIRED_JWT") {
         const originalRequest = config;
         return axios
           .post(
