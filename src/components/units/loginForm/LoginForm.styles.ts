@@ -14,6 +14,10 @@ export const Label = styled.div``;
 
 export const EmailInput = styled.input``;
 
+export const BasicInput = styled.input``;
+
+export const Timer = styled.div``;
+
 export const PasswordInput = styled.input``;
 
 export const RePasswordInput = styled.input``;
