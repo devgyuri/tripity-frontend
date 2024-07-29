@@ -1,27 +1,32 @@
 import styled from "@emotion/styled";
 
-export const Wrapper = styled.div`
+export const OAuthWrapper = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: column;
 `;
 
-export const Form = styled.form`
+export const GoogleButton = styled.button`
+  width: 90%;
+  height: 50px;
+  background-color: var(--google-color);
+  color: var(--black);
+  border: 1px solid var(--light-gray);
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 500;
+
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
-export const Label = styled.div``;
-
-export const EmailInput = styled.input``;
-
-export const BasicInput = styled.input``;
-
-export const Timer = styled.div``;
-
-export const PasswordInput = styled.input``;
-
-export const RePasswordInput = styled.input``;
-
-export const Button = styled.button``;
-
-export const ErrorMessage = styled.div``;
+export const Icon = styled.img`
+  width: 40px;
+  height: 40px;
+`;

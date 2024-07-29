@@ -6,6 +6,7 @@ import { AUTH_FORM_REGEX } from "../../../commons/constant/authFormRegex";
 import { ILoginInput } from "../../../commons/types/auth/loginInput";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import OAuthLogin from "../oAuthLogin/OAuthLogin.index";
 
 export default function LoginForm(): JSX.Element {
   const router = useRouter();
@@ -95,6 +96,7 @@ export default function LoginForm(): JSX.Element {
           )}
           <S.Button type="submit">로그인</S.Button>
         </S.Form>
+        <OAuthLogin />
       </S.Wrapper>
     </>
   );

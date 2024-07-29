@@ -1,21 +1,27 @@
 import styled from "@emotion/styled";
-import { LockOutlined, UserOutlined } from "@ant-design/icons";
-import { Button, Form, Input } from "antd";
 
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
 `;
 
-export const SignUpForm = styled(Form)``;
+export const Form = styled.form`
+  display: flex;
+  flex-direction: column;
+`;
 
-export const SignUpFormItem = styled(Form.Item)``;
+export const Label = styled.div``;
 
-export const SignUpButton = styled(Button)``;
+export const EmailInput = styled.input``;
 
-export const SignUpInput = styled(Input)``;
+export const BasicInput = styled.input``;
 
-export const UserIcon = styled(UserOutlined)``;
+export const Timer = styled.div``;
 
-export const LockIcon = styled(LockOutlined)``;
+export const PasswordInput = styled.input``;
+
+export const RePasswordInput = styled.input``;
+
+export const Button = styled.button``;
+
+export const ErrorMessage = styled.div``;

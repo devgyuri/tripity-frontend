@@ -1,4 +1,4 @@
-import * as S from "../loginForm/LoginForm.styles";
+import * as S from "./SignUpForm.styles";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
 import { ISignUpInput } from "../../../commons/types/auth/signUpInput";

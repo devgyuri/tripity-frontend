@@ -2,7 +2,7 @@
   --primary-color: #4e60ff;
   --secondary-color: #2d89ff;
   --third-color: #10adff;
-  --white: #eeeeee;
+  --white: #ffffff;
   --black: #111111;
   --dark-gray: #333333;
   --gray: #888888;
@@ -12,6 +12,10 @@
   --success-color: #52c41a;
   --warning-color: #faad14;
   --information-color: #1677ff;
+
+  --google-color: #ffffff;
+  --kakao-color: #ffeb3b;
+  --naver-color: #03c75a;
 }
 
 * {
