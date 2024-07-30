@@ -4,7 +4,7 @@ export const logOut = async () => {
   try {
     const res = await axiosBasic({
       method: "delete",
-      url: "/api/auth/logout",
+      url: "/logout",
       withCredentials: true,
     });
     const resData = res.data;
