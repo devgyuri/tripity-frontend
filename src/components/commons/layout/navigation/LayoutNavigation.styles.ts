@@ -23,34 +23,36 @@ export const LogoWrapper = styled.div`
 `;
 
 export const HomeLogo = styled.img`
-  height: 60px;
+  height: 50px;
 `;
 
 export const Title = styled.img`
-  height: 40px;
+  height: 30px;
 `;
 
 export const MenuWrapper = styled.nav`
-  margin-right: 10%;
+  margin-right: 30%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   font-size: 18px;
-  color: var(--black);
+  font-weight: 600;
 `;
 
 export const MenuItem = styled.div`
-  width: 200px;
-  padding: 10px 20px;
+  width: 100px;
+  padding: 10px 0;
   margin: 0px 5%;
-  border-radius: 20px;
+  // border-radius: 20px;
   text-align: center;
   cursor: pointer;
+  color: var(--gray);
 
   :hover {
-    background-color: var(--primary-color);
-    color: var(--white);
+    // background-color: var(--primary-color);
+    border-bottom: 3px solid var(--primary-color);
+    color: var(--black);
   }
 `;
 
@@ -60,6 +62,7 @@ export const LoginWrapper = styled.div`
   justify-content: right;
   text-align: right;
   align-items: center;
+  font-weight: 500;
 `;
 
 export const Login = styled.div`
@@ -67,12 +70,31 @@ export const Login = styled.div`
   margin-right: 30px;
   color: var(--black);
   cursor: pointer;
+
+  :hover {
+    color: var(--primary-color);
+  }
+`;
+
+export const Logout = styled.div`
+  width: 80px;
+  margin-right: 30px;
+  color: var(--black);
+  cursor: pointer;
+
+  :hover {
+    color: var(--primary-color);
+  }
 `;
 
 export const SignUp = styled.div`
   width: 80px;
   color: var(--black);
   cursor: pointer;
+
+  :hover {
+    color: var(--primary-color);
+  }
 `;
 
 export const Profile = styled.img`

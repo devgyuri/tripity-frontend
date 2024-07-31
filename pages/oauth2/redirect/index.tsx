@@ -6,6 +6,7 @@ import { userInfoState } from "../../../src/commons/stores/userInfoState";
 import { loginState } from "../../../src/commons/stores/loginState";
 import { REACT_QUERY_KEY } from "../../../src/commons/constant/reactQueryKey";
 import { useEffect } from "react";
+import { useRouter } from "next/router";
 
 interface IOAuth2RedirectPageProps {
   token: string | null;
@@ -14,6 +15,7 @@ interface IOAuth2RedirectPageProps {
 export default function OAuth2RedirectPage({
   token,
 }: IOAuth2RedirectPageProps): JSX.Element {
+  const router = useRouter();
   const queryClient = useQueryClient();
   const setUserInfo = useSetRecoilState(userInfoState);
   const setLoginState = useSetRecoilState(loginState);
@@ -32,12 +34,14 @@ export default function OAuth2RedirectPage({
       }
     } catch (error) {
       console.log(error);
+    } finally {
+      router.push("/");
     }
   };
 
   useEffect(() => {
     handleSNSLogin();
-  }, []);
+  });
 
   return (
     <>
