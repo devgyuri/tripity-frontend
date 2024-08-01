@@ -1,9 +1,9 @@
-import LayoutNavigation from "../../src/components/commons/layout/navigation/LayoutNavigation.index";
+import LayoutHeader from "../../src/components/commons/layout/header/LayoutHeader.index";
 
 export default function MissionPage(): JSX.Element {
   return (
     <>
-      <LayoutNavigation />
+      <LayoutHeader />
       Mission Page
     </>
   );

@@ -1,9 +1,11 @@
-import LayoutNavigation from "../src/components/commons/layout/navigation/LayoutNavigation.index";
+import LayoutBody from "../src/components/commons/layout/body/LayoutBody.index";
+import LayoutHeader from "../src/components/commons/layout/header/LayoutHeader.index";
 
 export default function Home() {
   return (
     <>
-      <LayoutNavigation />
+      <LayoutHeader />
+      <LayoutBody />
     </>
   );
 }

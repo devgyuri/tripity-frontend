@@ -25,13 +25,15 @@ export const useLogout = () => {
     },
   });
 
-  const onClickLogout = async (): Promise<void> => {
-    try {
-      await logoutMutation.mutateAsync();
-    } catch (error) {
-      console.error("logout api 호출 실패: ", error);
-    }
-  };
+  const onClickLogout =
+    (handleToggleMenu: () => void) => async (): Promise<void> => {
+      handleToggleMenu();
+      try {
+        await logoutMutation.mutateAsync();
+      } catch (error) {
+        console.error("logout api 호출 실패: ", error);
+      }
+    };
 
   return { logoutMutation, onClickLogout };
 };

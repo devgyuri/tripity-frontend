@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { ILayoutHeaderMenuItemProps } from "./LayoutHeader.types";
 
 export const Wrapper = styled.header`
   position: fixed;
@@ -13,6 +14,7 @@ export const Wrapper = styled.header`
   justify-content: space-between;
   align-items: center;
   color: var(--black);
+  border-bottom: 1px solid var(--light-gray);
 `;
 
 export const LogoWrapper = styled.div`
@@ -31,32 +33,41 @@ export const Title = styled.img`
 `;
 
 export const MenuWrapper = styled.nav`
+  height: inherit;
   margin-right: 30%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
   font-size: 18px;
-  font-weight: 600;
+  font-weight: 500;
 `;
 
 export const MenuItem = styled.div`
   width: 100px;
-  padding: 10px 0;
+  height: inherit;
   margin: 0px 5%;
-  // border-radius: 20px;
-  text-align: center;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  // text-align: center;
   cursor: pointer;
-  color: var(--gray);
+  color: ${(props: ILayoutHeaderMenuItemProps) =>
+    props.isSelected ? "var(--primary-color)" : "var(--black)"};
+  border-bottom: ${(props: ILayoutHeaderMenuItemProps) =>
+    props.isSelected
+      ? "3px solid var(--primary-color)"
+      : "3px solid var(--white)"};
 
   :hover {
-    // background-color: var(--primary-color);
-    border-bottom: 3px solid var(--primary-color);
-    color: var(--black);
+    color: var(--primary-color);
   }
 `;
 
-export const LoginWrapper = styled.div`
+export const MenuText = styled.p``;
+
+export const UserWrapper = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: right;
@@ -97,8 +108,47 @@ export const SignUp = styled.div`
   }
 `;
 
+export const ProfileWrapper = styled.div`
+  cursor: pointer;
+`;
+
 export const Profile = styled.img`
   width: 40px;
   height: 40px;
   border-radius: 20px;
+`;
+
+export const DropDownWrapper = styled.div`
+  // margin-top: 80px;
+  // display: flex;
+  // flex-direction: row;
+  // justify-content: end;
+  position: fixed;
+  top: 81px;
+  right: 50px;
+  // width: 100%;
+  z-index: 2;
+  overflow: hidden;
+  background-color: transparent;
+`;
+
+export const ListWrapper = styled.div`
+  width: 100px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  background-color: var(--white);
+`;
+
+export const ListItem = styled.button`
+  width: 100px;
+  height: 50px;
+  border: none;
+  color: var(--black);
+  background-color: transparent;
+
+  :hover {
+    color: var(--primary-color);
+  }
 `;
