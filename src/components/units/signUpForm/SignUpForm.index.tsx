@@ -1,3 +1,4 @@
+import * as A from "../../../commons/styles/authInput.styles";
 import * as S from "./SignUpForm.styles";
 import { useRouter } from "next/router";
 import { useForm } from "react-hook-form";
@@ -8,6 +9,8 @@ import { useEffect, useState } from "react";
 import { emailSendVerify } from "../../../commons/apis/auth/emailSendVerify";
 import { emailCheckVerify } from "../../../commons/apis/auth/emailCheckVerify";
 import { useLogin } from "../../../commons/hooks/useLogin";
+import Input from "../../commons/input/Input.index";
+import Button from "../../commons/button/Button.index";
 
 export default function SignUpForm(): JSX.Element {
   const router = useRouter();
@@ -72,6 +75,8 @@ export default function SignUpForm(): JSX.Element {
         setError("email", {
           message: "이미 가입된 이메일입니다.",
         });
+        setIsSendingEmail(false);
+        setTimerActive(false);
       } else {
         setIsSendingEmail(false);
         setTimerActive(false);
@@ -141,11 +146,11 @@ export default function SignUpForm(): JSX.Element {
     <>
       <S.Wrapper>
         <S.Form onSubmit={handleSubmit(onSubmit)}>
-          <S.Label>이메일</S.Label>
-          <S.EmailInput
+          <A.Input
             type="email"
             placeholder="이메일을 입력해 주세요."
             aria-invalid={errors.email ? "true" : "false"}
+            hasError={!!errors.email}
             {...register("email", {
               required: "이메일을 입력해 주세요.",
               pattern: {
@@ -154,38 +159,41 @@ export default function SignUpForm(): JSX.Element {
               },
             })}
           />
-          <S.Button
+          {errors.email && (
+            <A.ErrorMessage>{errors.email.message}</A.ErrorMessage>
+          )}
+          <A.Button
             disabled={!watch("email") || !!errors.email || isSendingEmail}
             onClick={handleSendEmailVerification}
           >
             이메일 인증
-          </S.Button>
+          </A.Button>
           {timerActive && (
             <>
-              <S.Label>인증코드</S.Label>
-              <S.BasicInput
+              <A.Input
                 type="text"
                 placeholder="인증코드를 입력해 주세요."
                 aria-invalid={errors.emailAuthCode ? "true" : "false"}
+                hasError={!!errors.emailAuthCode}
                 {...register("emailAuthCode", {
                   required: "인증코드를 입력해 주세요.",
                 })}
               />
               <S.Timer>{formatTimeToMSS(timer)}</S.Timer>
-              <S.Button
+              <A.LineButton
                 disabled={!watch("emailAuthCode") || !!errors.emailAuthCode}
                 onClick={handleCheckEmailVerification}
               >
                 인증하기
-              </S.Button>
-              <S.Button onClick={handleResendEmail}>재전송</S.Button>
+              </A.LineButton>
+              <A.LineButton onClick={handleResendEmail}>재전송</A.LineButton>
             </>
           )}
-          <S.Label>닉네임</S.Label>
-          <S.BasicInput
+          <A.Input
             type="text"
             placeholder="닉네임을 입력해 주세요."
             aria-invalid={errors.nickname ? "true" : "false"}
+            hasError={!!errors.nickname}
             {...register("nickname", {
               required: "닉네임을 입력해 주세요.",
               pattern: {
@@ -194,11 +202,14 @@ export default function SignUpForm(): JSX.Element {
               },
             })}
           />
-          <S.Label>비밀번호</S.Label>
-          <S.PasswordInput
+          {errors.nickname && (
+            <S.ErrorMessage>{errors.nickname.message}</S.ErrorMessage>
+          )}
+          <A.Input
             type="password"
             placeholder="비밀번호를 입력해 주세요."
             aria-invalid={errors.password ? "true" : "false"}
+            hasError={!!errors.password}
             {...register("password", {
               required: "비밀번호를 입력해 주세요.",
               pattern: {
@@ -207,11 +218,15 @@ export default function SignUpForm(): JSX.Element {
               },
             })}
           />
+          {errors.password && (
+            <S.ErrorMessage>{errors.password.message}</S.ErrorMessage>
+          )}
           <S.Label>비밀번호 확인</S.Label>
-          <S.PasswordInput
+          <A.Input
             type="password"
             placeholder="비밀번호를 다시 입력해 주세요."
             aria-invalid={errors.rePassword ? "true" : "false"}
+            hasError={!!errors.rePassword}
             {...register("rePassword", {
               required: "비밀번호를 다시 입력해 주세요.",
               pattern: {
@@ -220,18 +235,13 @@ export default function SignUpForm(): JSX.Element {
               },
             })}
           />
-          {errors.email ? (
-            <S.ErrorMessage>{errors.email.message}</S.ErrorMessage>
-          ) : errors.password ? (
-            <S.ErrorMessage>{errors.password.message}</S.ErrorMessage>
-          ) : errors.rePassword ? (
+          {errors.rePassword && (
             <S.ErrorMessage>{errors.rePassword.message}</S.ErrorMessage>
-          ) : (
-            errors.root && (
-              <S.ErrorMessage>{errors.root.message}</S.ErrorMessage>
-            )
           )}
-          <S.Button type="submit">회원가입</S.Button>
+          {errors.root && (
+            <S.ErrorMessage>{errors.root.message}</S.ErrorMessage>
+          )}
+          <A.Button type="submit">회원가입</A.Button>
         </S.Form>
       </S.Wrapper>
     </>

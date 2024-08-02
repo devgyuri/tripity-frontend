@@ -1,7 +1,7 @@
 import styled from "@emotion/styled";
 
 interface IInputProps {
-  isError: boolean;
+  hasError: boolean;
 }
 
 export const Wrapper = styled.div`
@@ -35,7 +35,7 @@ export const Input = styled.input`
   margin-bottom: 10px;
 
   border: ${(props: IInputProps) =>
-    props.isError ? "1px solid var(--error-color)" : "1px solid var(--gray)"};
+    props.hasError ? "1px solid var(--error-color)" : "1px solid var(--gray)"};
   border-radius: 8px;
 
   font-size: 16px;
@@ -54,7 +54,9 @@ export const Input = styled.input`
 export const Button = styled.button`
   width: 100%;
   height: 50px;
-  background-color: var(--primary-color);
+  margin-bottom: 10px;
+  background-color: ${(props) =>
+    props.disabled ? "var(--light-gray)" : "var(--primary-color)"};
   color: var(--white);
   border: none;
   border-radius: 8px;
@@ -62,11 +64,11 @@ export const Button = styled.button`
   font-weight: 500;
 
   &:hover {
-    cursor: pointer;
+    cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
   }
 `;
 
-export const InverseButton = styled.button`
+export const LineButton = styled.button`
   width: 100%;
   height: 50px;
   background-color: var(--white);
