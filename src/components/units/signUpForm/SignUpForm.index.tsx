@@ -7,10 +7,12 @@ import { AUTH_FORM_REGEX } from "../../../commons/constant/authFormRegex";
 import { useEffect, useState } from "react";
 import { emailSendVerify } from "../../../commons/apis/auth/emailSendVerify";
 import { emailCheckVerify } from "../../../commons/apis/auth/emailCheckVerify";
+import { useLogin } from "../../../commons/hooks/useLogin";
 
 export default function SignUpForm(): JSX.Element {
   const router = useRouter();
   const { signUpMutation } = useSignUp();
+  const { loginMutation } = useLogin();
 
   // email verification
   const [isSendingEmail, setIsSendingEmail] = useState(false);
@@ -115,8 +117,8 @@ export default function SignUpForm(): JSX.Element {
           console.log("+++++ SignUpForm +++++");
           console.log(data);
           alert("회원가입이 완료되었습니다.");
-          alert("로그인 해주세요.");
-          router.push("/login");
+          // alert("로그인 해주세요.");
+          // router.push("/login");
         },
         onError: (error: any) => {
           const errorRes = error.response;
@@ -129,6 +131,10 @@ export default function SignUpForm(): JSX.Element {
     } catch (error) {
       console.error("sign up api 호출 실패: ", error);
     }
+    await loginMutation.mutateAsync({
+      email: data.email,
+      password: data.password,
+    });
   };
 
   return (

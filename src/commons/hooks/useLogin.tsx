@@ -6,8 +6,10 @@ import { useSetRecoilState } from "recoil";
 import { postRefreshToken } from "../apis/auth/postRefreshToken";
 import { userInfoState } from "../stores/userInfoState";
 import { loginState } from "../stores/loginState";
+import { useRouter } from "next/router";
 
 export const useLogin = () => {
+  const router = useRouter();
   const queryClient = useQueryClient();
   const setUserInfo = useSetRecoilState(userInfoState);
   const setLoginState = useSetRecoilState(loginState);
@@ -21,6 +23,7 @@ export const useLogin = () => {
       localStorage.setItem("access_token", accessToken);
       setUserInfo(userInfo);
       setLoginState(true);
+      router.push("/");
       // setCookie("accessToken", accessToken, {
       //   path: "/",
       //   maxAge: ACCESS_TOKEN_MAX_AGE,
