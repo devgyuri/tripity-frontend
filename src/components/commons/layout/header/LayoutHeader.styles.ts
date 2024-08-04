@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { ILayoutHeaderMenuItemProps } from "./LayoutHeader.types";
+import { Modal } from "antd";
 
 export const Wrapper = styled.header`
   position: fixed;
@@ -151,4 +152,8 @@ export const ListItem = styled.button`
   :hover {
     color: var(--primary-color);
   }
+`;
+
+export const CustomModal = styled(Modal)`
+  padding-top: 20px;
 `;

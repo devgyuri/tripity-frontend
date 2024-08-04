@@ -31,7 +31,8 @@ export default function LoginForm(): JSX.Element {
           console.log("+++++ LoginForm +++++");
           console.log(data);
           console.log(userInfo);
-          router.push("/");
+          // router.push("/");
+          router.replace(pathname);
         },
         onError: (error: any) => {
           const errorRes = error.response;
@@ -67,7 +68,7 @@ export default function LoginForm(): JSX.Element {
                   message: "이메일 형식을 다시 확인해 주세요.",
                 },
               })}
-              isError={!!errors.email}
+              hasError={!!errors.email}
             />
             {errors.email && (
               <S.ErrorMessage>{errors.email.message}</S.ErrorMessage>
@@ -85,7 +86,7 @@ export default function LoginForm(): JSX.Element {
                   message: "비밀번호 형식을 다시 확인해 주세요.",
                 },
               })}
-              isError={!!errors.password}
+              hasError={!!errors.password}
             />
             {errors.password && (
               <S.ErrorMessage>{errors.password.message}</S.ErrorMessage>

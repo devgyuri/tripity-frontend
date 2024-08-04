@@ -10,6 +10,9 @@ import { NAV_LIST } from "../../../../commons/constant/navList";
 import Link from "next/link";
 import UserMenu from "./userMenu/UserMenu.index";
 import useClickHeader from "../../../../commons/hooks/useClickHeader";
+import LoginForm from "../../../units/loginForm/LoginForm.index";
+import { useToggleModal } from "../../../../commons/hooks/useToggleModal";
+import SignUpForm from "../../../units/signUpForm/SignUpForm.index";
 
 export default function LayoutHeader(): JSX.Element {
   const router = useRouter();
@@ -18,10 +21,13 @@ export default function LayoutHeader(): JSX.Element {
   const [userInfo] = useRecoilState(userInfoState);
 
   const [selectedNav, setSelectedNav] = useState(0);
+  const [isLoginModal, setIsLoginModal] = useState(true);
 
   const { onClickMoveToPage } = useMoveToPage();
   const { onClickLogout } = useLogout();
   const { menuRef, handleToggleMenu, isOpenMenu } = useClickHeader();
+
+  const { isOpenModal, handleToggleModal } = useToggleModal();
 
   useEffect(() => {
     NAV_LIST.forEach((el) => {
@@ -60,8 +66,23 @@ export default function LayoutHeader(): JSX.Element {
           </S.UserWrapper>
         ) : (
           <S.UserWrapper>
-            <S.Login onClick={onClickMoveToPage("/login")}>로그인</S.Login>
-            <S.SignUp onClick={onClickMoveToPage("/signUp")}>회원가입</S.SignUp>
+            <S.Login
+              onClick={() => {
+                setIsLoginModal(true);
+                handleToggleModal();
+              }}
+            >
+              로그인
+            </S.Login>
+            <S.SignUp
+              onClick={() => {
+                setIsLoginModal(false);
+                handleToggleModal();
+              }}
+            >
+              회원가입
+            </S.SignUp>
+            {/* <S.SignUp onClick={onClickMoveToPage("/signUp")}>회원가입</S.SignUp> */}
           </S.UserWrapper>
         )}
       </S.Wrapper>
@@ -76,6 +97,15 @@ export default function LayoutHeader(): JSX.Element {
             </S.ListItem>
           </S.ListWrapper>
         </S.DropDownWrapper>
+      )}
+      {isOpenModal && (
+        <S.CustomModal
+          open={isOpenModal}
+          onOk={handleToggleModal}
+          onCancel={handleToggleModal}
+        >
+          {isLoginModal ? <LoginForm /> : <SignUpForm />}
+        </S.CustomModal>
       )}
     </>
   );
