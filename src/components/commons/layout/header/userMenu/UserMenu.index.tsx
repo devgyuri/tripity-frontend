@@ -15,17 +15,17 @@ export default function UserMenu(): JSX.Element {
 
   return (
     <>
-      <S.Wrapper>
+      <S.UserMenuWrapper>
         <S.AlarmToggleButton ref={alarmRef} onClick={handleToggleAlarm}>
           <Alarm
             isOpenAlarm={isOpenAlarm}
             handleToggleAlarm={handleToggleAlarm}
-          ></Alarm>
+          />
         </S.AlarmToggleButton>
         <S.ChatToggleButton ref={chatRef} onClick={handleToggleChat}>
           <Chat isOpenChat={isOpenChat} handleToggleChat={handleToggleChat} />
         </S.ChatToggleButton>
-      </S.Wrapper>
+      </S.UserMenuWrapper>
     </>
   );
 }

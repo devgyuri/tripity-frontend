@@ -148,6 +148,7 @@ export const ListItem = styled.button`
   border: none;
   color: var(--black);
   background-color: transparent;
+  cursor: pointer;
 
   :hover {
     color: var(--primary-color);

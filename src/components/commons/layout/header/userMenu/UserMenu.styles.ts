@@ -1,11 +1,16 @@
 import styled from "@emotion/styled";
 
-export const Wrapper = styled.div`
+export const UserMenuWrapper = styled.div`
   display: flex;
   flex-direction: row;
-  margin-right: 10px;
+  margin-right: 20px;
 `;
 
-export const AlarmToggleButton = styled.div``;
+export const AlarmToggleButton = styled.div`
+  width: fit-content;
+  margin-right: 15px;
+`;
 
-export const ChatToggleButton = styled.div``;
+export const ChatToggleButton = styled.div`
+  width: fit-content;
+`;

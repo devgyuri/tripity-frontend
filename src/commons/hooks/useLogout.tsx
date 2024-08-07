@@ -17,6 +17,9 @@ export const useLogout = () => {
       setUserInfo({
         id: null,
         nickname: null,
+        email: null,
+        intro: null,
+        image: null,
       });
       setLoginState(false);
     },

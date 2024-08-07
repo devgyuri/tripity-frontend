@@ -13,6 +13,10 @@ import useClickHeader from "../../../../commons/hooks/useClickHeader";
 import LoginForm from "../../../units/loginForm/LoginForm.index";
 import { useToggleModal } from "../../../../commons/hooks/useToggleModal";
 import SignUpForm from "../../../units/signUpForm/SignUpForm.index";
+import {
+  DEFAULT_PROFILE_IMAGE,
+  IMAGE_URL_PREFIX,
+} from "../../../../commons/constant/resource";
 
 export default function LayoutHeader(): JSX.Element {
   const router = useRouter();
@@ -22,6 +26,7 @@ export default function LayoutHeader(): JSX.Element {
 
   const [selectedNav, setSelectedNav] = useState(0);
   const [isLoginModal, setIsLoginModal] = useState(true);
+  const [profileImage, setProfileImage] = useState("");
 
   const { onClickMoveToPage } = useMoveToPage();
   const { onClickLogout } = useLogout();
@@ -36,6 +41,11 @@ export default function LayoutHeader(): JSX.Element {
       }
     });
   }, [router]);
+
+  useEffect(() => {
+    setProfileImage(userInfo.image ?? "");
+    console.log(IMAGE_URL_PREFIX + userInfo.image);
+  }, [userInfo]);
 
   return (
     <>
@@ -61,7 +71,13 @@ export default function LayoutHeader(): JSX.Element {
           <S.UserWrapper>
             <UserMenu />
             <S.ProfileWrapper ref={menuRef} onClick={handleToggleMenu}>
-              <S.Profile src="/images/profile.png" />
+              <S.Profile
+                src={
+                  profileImage
+                    ? IMAGE_URL_PREFIX + profileImage
+                    : DEFAULT_PROFILE_IMAGE
+                }
+              />
             </S.ProfileWrapper>
           </S.UserWrapper>
         ) : (
@@ -82,7 +98,6 @@ export default function LayoutHeader(): JSX.Element {
             >
               회원가입
             </S.SignUp>
-            {/* <S.SignUp onClick={onClickMoveToPage("/signUp")}>회원가입</S.SignUp> */}
           </S.UserWrapper>
         )}
       </S.Wrapper>
