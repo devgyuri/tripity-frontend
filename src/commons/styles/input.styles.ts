@@ -1,5 +1,8 @@
 import styled from "@emotion/styled";
-import { ILineInputProps } from "./Input.types";
+
+interface ILineInputProps {
+  hasError: boolean;
+}
 
 export const LineInput = styled.input`
   width: 100%;

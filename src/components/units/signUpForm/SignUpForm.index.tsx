@@ -9,8 +9,6 @@ import { useEffect, useState } from "react";
 import { emailSendVerify } from "../../../commons/apis/auth/emailSendVerify";
 import { emailCheckVerify } from "../../../commons/apis/auth/emailCheckVerify";
 import { useLogin } from "../../../commons/hooks/useLogin";
-import Input from "../../commons/input/Input.index";
-import Button from "../../commons/button/Button.index";
 
 export default function SignUpForm(): JSX.Element {
   const router = useRouter();

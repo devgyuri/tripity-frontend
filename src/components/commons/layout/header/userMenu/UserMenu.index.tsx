@@ -16,15 +16,15 @@ export default function UserMenu(): JSX.Element {
   return (
     <>
       <S.UserMenuWrapper>
-        <S.AlarmToggleButton ref={alarmRef} onClick={handleToggleAlarm}>
-          <Alarm
+        {/* <S.AlarmToggleButton ref={alarmRef} onClick={handleToggleAlarm}> */}
+        {/* <Alarm
             isOpenAlarm={isOpenAlarm}
             handleToggleAlarm={handleToggleAlarm}
-          />
-        </S.AlarmToggleButton>
-        <S.ChatToggleButton ref={chatRef} onClick={handleToggleChat}>
-          <Chat isOpenChat={isOpenChat} handleToggleChat={handleToggleChat} />
-        </S.ChatToggleButton>
+          /> */}
+        {/* </S.AlarmToggleButton> */}
+        {/* <S.ChatToggleButton ref={chatRef} onClick={handleToggleChat}>
+        <Chat isOpenChat={isOpenChat} handleToggleChat={handleToggleChat} />
+        </S.ChatToggleButton> */}
       </S.UserMenuWrapper>
     </>
   );

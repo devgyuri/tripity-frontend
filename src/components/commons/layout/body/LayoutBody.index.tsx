@@ -1,11 +1,14 @@
+import { ReactElement } from "react";
 import * as S from "./LayoutBody.styles";
 
-export default function LayoutBody(): JSX.Element {
+interface ILayoutBodyProps {
+  children?: ReactElement;
+}
+
+export default function LayoutBody(props: ILayoutBodyProps): JSX.Element {
   return (
     <>
-      <S.Wrapper>
-        <S.Image src="/images/banner01.png" />
-      </S.Wrapper>
+      <S.Wrapper>{props.children}</S.Wrapper>
     </>
   );
 }

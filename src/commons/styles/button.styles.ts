@@ -1,7 +1,8 @@
 import styled from "@emotion/styled";
 
 export const Button = styled.button`
-  width: 100%;
+  width: fit-content;
+  padding: 10px;
   height: 50px;
   background-color: var(--primary-color);
   color: var(--white);
@@ -16,7 +17,8 @@ export const Button = styled.button`
 `;
 
 export const LineButton = styled.button`
-  width: 100%;
+  width: fit-content;
+  padding: 10px;
   height: 50px;
   background-color: transparent;
   color: var(--primary-color);
@@ -31,7 +33,8 @@ export const LineButton = styled.button`
 `;
 
 export const DisabledButton = styled.button`
-  width: 100%;
+  width: fit-content;
+  padding: 10px;
   height: 50px;
   background-color: var(--light-gray);
   color: var(--white);
@@ -42,7 +45,8 @@ export const DisabledButton = styled.button`
 `;
 
 export const ErrorButton = styled.button`
-  width: 100%;
+  width: fit-content;
+  padding: 10px;
   height: 50px;
   background-color: var(--error-color);
   color: var(--white);

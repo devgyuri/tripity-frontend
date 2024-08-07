@@ -10,8 +10,9 @@ export const userInfoState = atom<IUserInfo>({
   key: "userInfoState",
   default: {
     id: null,
-    // role: null,
-    // profileImage: null,
+    email: null,
+    image: null,
+    intro: null,
     nickname: null,
   },
   effects_UNSTABLE: [persistAtom],
