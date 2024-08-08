@@ -1,7 +1,12 @@
 import styled from "@emotion/styled";
 
+interface IButtonProps {
+  isFillWidth?: boolean;
+}
+
 export const Button = styled.button`
-  width: fit-content;
+  width: ${(props: IButtonProps) =>
+    props.isFillWidth ? "100%" : "fit-content"};
   padding: 10px;
   height: 50px;
   background-color: var(--primary-color);
@@ -10,14 +15,12 @@ export const Button = styled.button`
   border-radius: 8px;
   font-size: 16px;
   font-weight: 500;
-
-  :hover {
-    cursor: pointer;
-  }
+  cursor: pointer;
 `;
 
 export const LineButton = styled.button`
-  width: fit-content;
+  width: ${(props: IButtonProps) =>
+    props.isFillWidth ? "100%" : "fit-content"};
   padding: 10px;
   height: 50px;
   background-color: transparent;
@@ -26,14 +29,12 @@ export const LineButton = styled.button`
   border-radius: 8px;
   font-size: 16px;
   font-weight: 500;
-
-  :hover {
-    cursor: pointer;
-  }
+  cursor: pointer;
 `;
 
 export const DisabledButton = styled.button`
-  width: fit-content;
+  width: ${(props: IButtonProps) =>
+    props.isFillWidth ? "100%" : "fit-content"};
   padding: 10px;
   height: 50px;
   background-color: var(--light-gray);
@@ -45,7 +46,8 @@ export const DisabledButton = styled.button`
 `;
 
 export const ErrorButton = styled.button`
-  width: fit-content;
+  width: ${(props: IButtonProps) =>
+    props.isFillWidth ? "100%" : "fit-content"};
   padding: 10px;
   height: 50px;
   background-color: var(--error-color);

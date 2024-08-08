@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import { Modal } from "antd";
 
 interface IProfileImageProps {
   url: string;
@@ -28,7 +29,10 @@ export const ProfileImage = styled.div`
 `;
 
 export const ContentWrapper = styled.div`
-  width: 300px;
+  // width: 300px;
+  flex-grow: 1;
   display: flex;
   flex-direction: column;
 `;
+
+export const CustomModal = styled(Modal)``;
