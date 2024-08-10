@@ -22,3 +22,10 @@ export const Content1 = styled.p`
   font-size: 16px;
   color: var(--gray);
 `;
+
+export const ErrorMessage = styled.div`
+  margin-bottom: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--error-color);
+`;

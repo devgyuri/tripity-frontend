@@ -9,6 +9,8 @@ export const Wrapper = styled.div`
   flex-direction: column;
 `;
 
+export const Form = styled.form``;
+
 export const EditWrapper = styled.div`
   display: flex;
   flex-direction: row;
