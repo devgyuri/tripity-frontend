@@ -43,8 +43,8 @@ export default function LayoutHeader(): JSX.Element {
   }, [router]);
 
   useEffect(() => {
-    setProfileImage(userInfo.image ?? "");
-    console.log(IMAGE_URL_PREFIX + userInfo.image);
+    setProfileImage(userInfo?.image ?? "");
+    console.log(IMAGE_URL_PREFIX + userInfo?.image);
   }, [userInfo]);
 
   return (

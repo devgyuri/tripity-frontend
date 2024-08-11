@@ -23,9 +23,11 @@ export default function UserProfile(): JSX.Element {
 
   useEffect(() => {
     setImageUrl(
-      userInfo.image ? IMAGE_URL_PREFIX + userInfo.image : DEFAULT_PROFILE_IMAGE
+      userInfo?.image
+        ? IMAGE_URL_PREFIX + userInfo?.image
+        : DEFAULT_PROFILE_IMAGE
     );
-    console.log(IMAGE_URL_PREFIX + userInfo.image);
+    console.log(IMAGE_URL_PREFIX + userInfo?.image);
   }, [userInfo]);
 
   return (
@@ -35,9 +37,9 @@ export default function UserProfile(): JSX.Element {
         <S.ProfileWrapper>
           <S.ProfileImage url={imageUrl} />
           <S.ContentWrapper>
-            <Title3>{userInfo.nickname}</Title3>
-            <Content1>{userInfo.email}</Content1>
-            <Content1>{userInfo.intro}</Content1>
+            <Title3>{userInfo?.nickname}</Title3>
+            <Content1>{userInfo?.email}</Content1>
+            <Content1>{userInfo?.intro}</Content1>
           </S.ContentWrapper>
           <LineButton onClick={handleToggleModal}>프로필 편집</LineButton>
         </S.ProfileWrapper>
@@ -48,7 +50,7 @@ export default function UserProfile(): JSX.Element {
           onOk={handleToggleModal}
           onCancel={handleToggleModal}
         >
-          <EditProfileForm />
+          <EditProfileForm handleToggleModal={handleToggleModal} />
         </S.CustomModal>
       )}
     </>

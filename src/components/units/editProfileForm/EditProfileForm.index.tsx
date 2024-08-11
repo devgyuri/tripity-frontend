@@ -2,7 +2,6 @@ import { Button } from "../../../commons/styles/button.styles";
 import {
   ErrorMessage,
   Title1,
-  Title2,
   Title3,
 } from "../../../commons/styles/content.styles";
 import * as S from "./EditProfileForm.styles";
@@ -20,8 +19,9 @@ import { updateProfile } from "../../../commons/apis/users/updateProfile";
 import { useUpdateProfile } from "../../../commons/hooks/useUpdateProfile";
 import { fetchData } from "../../../commons/utils/fetchData";
 import { useUploads } from "../../../commons/hooks/useUploads";
+import { IEditProfileProps } from "./EditProfileForm.types";
 
-export default function EditProfileForm(): JSX.Element {
+export default function EditProfileForm(props: IEditProfileProps): JSX.Element {
   const userInfo = useRecoilValue(userInfoState);
 
   const [imageUrl, setImageUrl] = useState(DEFAULT_PROFILE_IMAGE);
@@ -34,15 +34,25 @@ export default function EditProfileForm(): JSX.Element {
 
   useEffect(() => {
     setImageUrl(
-      userInfo.image ? IMAGE_URL_PREFIX + userInfo.image : DEFAULT_PROFILE_IMAGE
+      userInfo?.image
+        ? IMAGE_URL_PREFIX + userInfo?.image
+        : DEFAULT_PROFILE_IMAGE
     );
+    setValue("nickname", userInfo?.nickname ?? "");
+    setValue("intro", userInfo?.intro ?? "");
+    setValue("image", userInfo?.image ?? "");
   }, [userInfo]);
+
+  useEffect(() => {
+    setValue("image", imageUrl.replace(IMAGE_URL_PREFIX, ""));
+  }, [imageUrl]);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
     getValues,
+    setValue,
     setError,
   } = useForm<IEditProfileInput>({
     mode: "onChange",
@@ -50,10 +60,12 @@ export default function EditProfileForm(): JSX.Element {
   });
 
   const onSubmit = async (data: IEditProfileInput) => {
+    console.log("+++++ update profile submit ++++++");
+    console.log(data);
     try {
       await updateProfileMutation.mutateAsync(data, {
         onSuccess: (data) => {
-          console.log("profile update 성공");
+          props.handleToggleModal();
         },
         onError: (error: any) => {
           const errorRes = error.response;
@@ -74,7 +86,7 @@ export default function EditProfileForm(): JSX.Element {
     console.log("+++++ check nickname duplication +++++");
     console.log(result);
 
-    if (!result) {
+    if (result) {
       setError("nickname", {
         message: "사용할 수 없는 닉네임입니다.",
       });
@@ -114,7 +126,7 @@ export default function EditProfileForm(): JSX.Element {
               <S.NicknameWrapper>
                 <LineInput
                   placeholder="닉네임을 입력해 주세요."
-                  defaultValue={userInfo.nickname ?? ""}
+                  defaultValue={userInfo?.nickname ?? ""}
                   aria-invalid={errors.nickname ? "true" : "false"}
                   hasError={!!errors.nickname}
                   style={{ flexGrow: "1" }}
@@ -135,7 +147,7 @@ export default function EditProfileForm(): JSX.Element {
               <Title3>자기 소개</Title3>
               <TextInput
                 placeholder="자기소개를 입력해 주세요."
-                defaultValue={userInfo.intro ?? ""}
+                defaultValue={userInfo?.intro ?? ""}
                 {...register("intro", {
                   required: "자기소개를 입력해 주세요.",
                 })}

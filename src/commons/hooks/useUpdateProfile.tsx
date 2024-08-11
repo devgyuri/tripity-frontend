@@ -15,9 +15,8 @@ export const useUpdateProfile = () => {
   const updateProfileMutation = useMutation({
     mutationFn: (data: IEditProfileInput) => updateProfile(data),
     onSuccess: (data) => {
-      const { userInfo } = data;
-      queryClient.setQueryData(REACT_QUERY_KEY.userInfo, userInfo);
-      setUserInfo(userInfo);
+      queryClient.setQueryData(REACT_QUERY_KEY.userInfo, data);
+      setUserInfo(data);
     },
     onError: (error) => {
       console.error("login 실패: ", error);
