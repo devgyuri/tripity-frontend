@@ -19,6 +19,7 @@ import { LineButton } from "../../../commons/styles/authInput.styles";
 import { updateProfile } from "../../../commons/apis/users/updateProfile";
 import { useUpdateProfile } from "../../../commons/hooks/useUpdateProfile";
 import { fetchData } from "../../../commons/utils/fetchData";
+import { useUploads } from "../../../commons/hooks/useUploads";
 
 export default function EditProfileForm(): JSX.Element {
   const userInfo = useRecoilValue(userInfoState);
@@ -26,6 +27,10 @@ export default function EditProfileForm(): JSX.Element {
   const [imageUrl, setImageUrl] = useState(DEFAULT_PROFILE_IMAGE);
 
   const { updateProfileMutation } = useUpdateProfile();
+
+  const { fileRef, onChangeFile, onClickUpload } = useUploads({
+    setImageUrl,
+  });
 
   useEffect(() => {
     setImageUrl(
@@ -48,7 +53,7 @@ export default function EditProfileForm(): JSX.Element {
     try {
       await updateProfileMutation.mutateAsync(data, {
         onSuccess: (data) => {
-          const { userInfo } = data;
+          console.log("profile update 성공");
         },
         onError: (error: any) => {
           const errorRes = error.response;
@@ -76,6 +81,10 @@ export default function EditProfileForm(): JSX.Element {
     }
   };
 
+  const onClickImageRemove = () => {
+    setImageUrl(DEFAULT_PROFILE_IMAGE);
+  };
+
   return (
     <>
       <S.Wrapper>
@@ -84,10 +93,21 @@ export default function EditProfileForm(): JSX.Element {
           <S.EditWrapper>
             <S.ImageWrapper>
               <S.Image url={imageUrl} />
-              <LineButton style={{ marginBottom: "10px" }}>
+              <LineButton
+                type="button"
+                onClick={onClickUpload}
+                style={{ marginBottom: "10px" }}
+              >
                 사진 업로드
               </LineButton>
-              <LineButton>사진 제거</LineButton>
+              <S.FileInputHidden
+                type="file"
+                ref={fileRef}
+                onChange={onChangeFile}
+              />
+              <LineButton type="button" onClick={onClickImageRemove}>
+                사진 제거
+              </LineButton>
             </S.ImageWrapper>
             <S.ContentWrapper>
               <Title3>닉네임</Title3>

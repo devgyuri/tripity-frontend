@@ -39,6 +39,10 @@ export const Image = styled.div`
   background-size: cover;
 `;
 
+export const FileInputHidden = styled.input`
+  display: none;
+`;
+
 export const ContentWrapper = styled.div`
   display: flex;
   flex-direction: column;
