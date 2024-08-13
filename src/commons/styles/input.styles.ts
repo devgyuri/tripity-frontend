@@ -4,6 +4,21 @@ interface ILineInputProps {
   hasError: boolean;
 }
 
+export const NonBorderInput = styled.input`
+  width: auto;
+  height: 50px;
+  padding: 0 16px;
+  border: none;
+
+  &::placeholder {
+    font-weight: 300;
+    color: var(--light-gray);
+  }
+ 
+  &:focus {
+    outline: none;
+`;
+
 export const LineInput = styled.input`
   width: auto;
   height: 50px;
