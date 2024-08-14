@@ -8,6 +8,7 @@ import * as S from "./MissionWrite.styles";
 import { IMissionWriteInput } from "../../../../commons/types/missions/missionWriteInput";
 import { Title1 } from "../../../../commons/styles/content.styles";
 import { useMission } from "../../../../commons/hooks/useMission";
+import TextEditor from "../../textEditor/TextEditor.index";
 
 export default function MissionWrite(): JSX.Element {
   const { createMissionMutation } = useMission();
@@ -74,6 +75,11 @@ export default function MissionWrite(): JSX.Element {
             {...register("content", {
               required: "내용을 입력해 주세요.",
             })}
+          />
+          <TextEditor
+            onChange={() => {
+              console.log("textEditorChange");
+            }}
           />
           <S.ButtonWrapper>
             <Button>등록하기</Button>
