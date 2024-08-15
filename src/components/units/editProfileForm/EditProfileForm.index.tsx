@@ -1,4 +1,4 @@
-import { Button } from "../../../commons/styles/button.styles";
+import { CustomButton } from "../../../commons/styles/button.styles";
 import {
   ErrorMessage,
   Title1,
@@ -134,12 +134,12 @@ export default function EditProfileForm(props: IEditProfileProps): JSX.Element {
                     required: "닉네임을 입력해 주세요.",
                   })}
                 />
-                <Button
+                <CustomButton
                   onClick={checkNicknameDuplication}
                   style={{ minWidth: "76px" }}
                 >
                   중복확인
-                </Button>
+                </CustomButton>
               </S.NicknameWrapper>
               {errors.nickname && (
                 <ErrorMessage>{errors.nickname.message}</ErrorMessage>
@@ -155,7 +155,7 @@ export default function EditProfileForm(props: IEditProfileProps): JSX.Element {
             </S.ContentWrapper>
           </S.EditWrapper>
           <S.ButtonWrapper>
-            <Button>프로필 저장</Button>
+            <CustomButton>프로필 저장</CustomButton>
           </S.ButtonWrapper>
         </S.Form>
       </S.Wrapper>

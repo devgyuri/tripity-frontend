@@ -1,5 +1,5 @@
-import { useForm } from "react-hook-form";
-import { Button } from "../../../../commons/styles/button.styles";
+import { Controller, useForm } from "react-hook-form";
+import { CustomButton } from "../../../../commons/styles/button.styles";
 import {
   NonBorderInput,
   TextInput,
@@ -8,7 +8,12 @@ import * as S from "./MissionWrite.styles";
 import { IMissionWriteInput } from "../../../../commons/types/missions/missionWriteInput";
 import { Title1 } from "../../../../commons/styles/content.styles";
 import { useMission } from "../../../../commons/hooks/useMission";
-import TextEditor from "../../textEditor/TextEditor.index";
+import dynamic from "next/dynamic";
+import { getValue } from "@mui/system";
+
+const TextEditor = dynamic(() => import("../../textEditor/TextEditor.index"), {
+  ssr: false,
+});
 
 export default function MissionWrite(): JSX.Element {
   const { createMissionMutation } = useMission();
@@ -16,14 +21,22 @@ export default function MissionWrite(): JSX.Element {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    control,
+    getValues,
+    formState: { errors, isDirty, isValid },
     setError,
   } = useForm<IMissionWriteInput>({
-    mode: "onSubmit",
+    mode: "onChange",
     criteriaMode: "all",
   });
 
   const onSubmit = async (data: IMissionWriteInput) => {
+    console.log("mission write submit");
+    console.log(errors.root);
+    console.log(errors.title);
+    console.log(errors.name);
+    console.log(errors.content);
+
     if (errors.title || errors.name || errors.content) {
       alert(errors.title?.message);
       alert(errors.name?.message);
@@ -69,20 +82,32 @@ export default function MissionWrite(): JSX.Element {
               required: "미션명을 입력해 주세요.",
             })}
           />
-          {/* <TextInput
-            placeholder="내용을 입력해 주세요."
-            style={{ width: "100%" }}
-            {...register("content", {
-              required: "내용을 입력해 주세요.",
-            })}
-          /> */}
-          <TextEditor
-            onChange={(value: string) => {
-              console.log(value);
+          <Controller
+            control={control}
+            name="content"
+            rules={{
+              required: "미션 내용을 입력해 주세요.",
+              maxLength: {
+                value: 1000,
+                message: "최대 1000자까지 입력이 가능합니다.",
+              },
             }}
+            render={({ field: { onChange, value } }) => (
+              <TextEditor
+                errors={errors.content !== undefined}
+                onChange={onChange}
+                value={value}
+              />
+            )}
           />
           <S.ButtonWrapper>
-            <Button>등록하기</Button>
+            <CustomButton
+              type="submit"
+              ifFill={true}
+              isDisabled={!isDirty || !isValid}
+            >
+              등록하기
+            </CustomButton>
           </S.ButtonWrapper>
         </S.Form>
       </S.Wrapper>

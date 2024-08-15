@@ -1,29 +1,8 @@
-import dynamic from "next/dynamic";
-import { RefObject, useMemo, useRef, useState } from "react";
-import { ReactQuillProps } from "react-quill";
+import { useMemo, useRef, useState } from "react";
 import "react-quill/dist/quill.snow.css";
-import { useUploads } from "../../../commons/hooks/useUploads";
 import { uploadImage } from "../../../commons/apis/users/uploadImage";
 import { IMAGE_URL_PREFIX } from "../../../commons/constant/resource";
-
-const ReactQuill = dynamic(
-  async () => {
-    const { default: RQ } = await import("react-quill");
-
-    const Component = ({
-      forwardedRef,
-      ...props
-    }: { forwardedRef: RefObject<any> } & ReactQuillProps) => (
-      <RQ ref={forwardedRef} {...props} />
-    );
-
-    Component.displayName = "ReactQuill";
-    return Component;
-  },
-  {
-    ssr: false,
-  }
-);
+import ReactQuill from "react-quill";
 
 const MAX_SIZE_IN_BYTES = 10 * 1024 * 1024;
 
@@ -131,7 +110,7 @@ export default function TextEditor({
   return (
     <>
       <ReactQuill
-        forwardedRef={quillRef}
+        ref={quillRef}
         theme="snow"
         placeholder="미션 상세 내용을 작성해 주세요."
         value={value}
