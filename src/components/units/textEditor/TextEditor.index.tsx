@@ -1,12 +1,35 @@
-import { useMemo, useRef, useState } from "react";
-import "quill/dist/quill.snow.css";
-import { useQuill } from "react-quilljs";
+import dynamic from "next/dynamic";
+import { RefObject, useMemo, useRef, useState } from "react";
+import { ReactQuillProps } from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import { useUploads } from "../../../commons/hooks/useUploads";
+import { uploadImage } from "../../../commons/apis/users/uploadImage";
+import { IMAGE_URL_PREFIX } from "../../../commons/constant/resource";
+
+const ReactQuill = dynamic(
+  async () => {
+    const { default: RQ } = await import("react-quill");
+
+    const Component = ({
+      forwardedRef,
+      ...props
+    }: { forwardedRef: RefObject<any> } & ReactQuillProps) => (
+      <RQ ref={forwardedRef} {...props} />
+    );
+
+    Component.displayName = "ReactQuill";
+    return Component;
+  },
+  {
+    ssr: false,
+  }
+);
 
 const MAX_SIZE_IN_BYTES = 10 * 1024 * 1024;
 
 interface ITextEditorProps {
   value?: string;
-  onChange: () => void;
+  onChange: (value: string) => void;
   errors?: boolean;
 }
 
@@ -15,64 +38,22 @@ export default function TextEditor({
   onChange,
   errors,
 }: ITextEditorProps): JSX.Element {
-  const theme = "snow";
-
-  const placeholder = "미션 세부내용을 작성해 주세요.";
-
-  const modules = useMemo(() => {
-    return {
-      toolbar: {
-        container: [
-          [{ header: "1" }, { header: "2" }],
-          [{ size: [] }],
-          ["bold", "italic", "underline", "strike", "blockquote"],
-          [
-            { list: "ordered" },
-            { list: "bullet" },
-            { indent: "-1" },
-            { indent: "-1" },
-          ],
-          ["link", "image"],
-          ["clean"],
-        ],
-        // handlers: {
-        //   image: imageHandler,
-        // },
-      },
-    };
-  }, []);
-
-  const formats = [
-    "header",
-    "size",
-    "bold",
-    "italic",
-    "underline",
-    "strike",
-    "blockquote",
-    "list",
-    "bullet",
-    "indent",
-    "link",
-    "image",
-  ];
-
-  // const quillRef = useRef<any>(null);
-  const { quillRef } = useQuill({ theme, modules, formats, placeholder });
+  const quillRef = useRef<any>(null);
   const [uploaded, setUploaded] = useState(false);
+  const [imageUrl, setImageUrl] = useState("");
 
   const imageHandler = async () => {
     let quill = quillRef.current?.getEditor();
     const editorHtml = quill?.root.innerHTML;
-    if (editorHtml.includes("<img")) {
-      setUploaded(true);
-      alert("이미지는 1개까지 업로드할 수 있어요.");
-      return;
-    }
-    if (uploaded) {
-      alert("이미지는 1개까지 업로드할 수 있어요.");
-      return;
-    }
+    // if (editorHtml.includes("<img")) {
+    //   setUploaded(true);
+    //   alert("이미지는 1개까지 업로드할 수 있어요.");
+    //   return;
+    // }
+    // if (uploaded) {
+    //   alert("이미지는 1개까지 업로드할 수 있어요.");
+    //   return;
+    // }
 
     const input = document.createElement("input");
     const formData = new FormData();
@@ -92,12 +73,72 @@ export default function TextEditor({
       }
 
       // image upload logic
+      try {
+        const data = await uploadImage(formData);
+        const range = quillRef.current?.getEditor().getSelection()?.index;
+        if (range !== null && range !== undefined) {
+          quill?.getSelection(range, 1);
+          quill?.clipboard.dangerouslyPasteHTML(
+            range,
+            `<img src=${IMAGE_URL_PREFIX + data} alt="게시글이미지" priority>`
+          );
+        }
+        return data;
+      } catch (error) {
+        console.error(error);
+      }
     };
   };
 
+  const modules = useMemo(() => {
+    return {
+      toolbar: {
+        container: [
+          [{ header: "1" }, { header: "2" }],
+          [{ size: [] }],
+          ["bold", "italic", "underline", "strike", "blockquote"],
+          [
+            { list: "ordered" },
+            { list: "bullet" },
+            { indent: "-1" },
+            { indent: "-1" },
+          ],
+          ["link", "image"],
+          ["clean"],
+        ],
+        handlers: {
+          image: imageHandler,
+        },
+      },
+    };
+  }, []);
+
+  const formats = [
+    "header",
+    "size",
+    "bold",
+    "italic",
+    "underline",
+    "strike",
+    "blockquote",
+    "list",
+    "bullet",
+    "indent",
+    "link",
+    "image",
+  ];
+
   return (
     <>
-      <div ref={quillRef} onChange={onChange}></div>
+      <ReactQuill
+        forwardedRef={quillRef}
+        theme="snow"
+        placeholder="미션 상세 내용을 작성해 주세요."
+        value={value}
+        onChange={onChange}
+        modules={modules}
+        formats={formats}
+      />
     </>
   );
 }

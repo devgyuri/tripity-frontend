@@ -69,16 +69,16 @@ export default function MissionWrite(): JSX.Element {
               required: "미션명을 입력해 주세요.",
             })}
           />
-          <TextInput
+          {/* <TextInput
             placeholder="내용을 입력해 주세요."
             style={{ width: "100%" }}
             {...register("content", {
               required: "내용을 입력해 주세요.",
             })}
-          />
+          /> */}
           <TextEditor
-            onChange={() => {
-              console.log("textEditorChange");
+            onChange={(value: string) => {
+              console.log(value);
             }}
           />
           <S.ButtonWrapper>
