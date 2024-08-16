@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 
 interface IButtonProps {
   isFillWidth?: boolean;
-  ifFill?: boolean;
+  isFill?: boolean;
   isDisabled?: boolean;
 }
 
@@ -14,11 +14,11 @@ export const CustomButton = styled.button`
   background-color: ${(props: IButtonProps) =>
     props.isDisabled
       ? "var(--light-gray)"
-      : props.ifFill
+      : props.isFill
         ? "var(--primary-color)"
         : "transparent"};
   color: ${(props: IButtonProps) =>
-    props.ifFill === false ? "var(--primary-color)" : "var(--white)"};
+    props.isFill === false ? "var(--primary-color)" : "var(--white)"};
   border: none;
   border-radius: 8px;
   font-size: 16px;

@@ -1,19 +1,18 @@
 import { Controller, useForm } from "react-hook-form";
 import { CustomButton } from "../../../../commons/styles/button.styles";
-import {
-  NonBorderInput,
-  TextInput,
-} from "../../../../commons/styles/input.styles";
+import { NonBorderInput } from "../../../../commons/styles/input.styles";
 import * as S from "./MissionWrite.styles";
 import { IMissionWriteInput } from "../../../../commons/types/missions/missionWriteInput";
 import { Title1 } from "../../../../commons/styles/content.styles";
 import { useMission } from "../../../../commons/hooks/useMission";
 import dynamic from "next/dynamic";
-import { getValue } from "@mui/system";
 
-const TextEditor = dynamic(() => import("../../textEditor/TextEditor.index"), {
-  ssr: false,
-});
+const TextEditor = dynamic(
+  () => import("../../../commons/textEditor/TextEditor.index"),
+  {
+    ssr: false,
+  }
+);
 
 export default function MissionWrite(): JSX.Element {
   const { createMissionMutation } = useMission();
@@ -103,7 +102,7 @@ export default function MissionWrite(): JSX.Element {
           <S.ButtonWrapper>
             <CustomButton
               type="submit"
-              ifFill={true}
+              isFill={true}
               isDisabled={!isDirty || !isValid}
             >
               등록하기

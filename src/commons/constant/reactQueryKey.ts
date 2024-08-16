@@ -6,4 +6,7 @@ export const REACT_QUERY_KEY = {
   accessToken: "accessToken",
   refreshToken: "refreshToken",
   userInfo: "userInfo",
+
+  // mission
+  missionDetail: "missionDetail",
 };
