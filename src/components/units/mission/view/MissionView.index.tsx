@@ -11,27 +11,28 @@ import TextEditorView from "../../../commons/textEditorView/TextEditorView.index
 import { IMissionDetail } from "../../../../commons/types/missions/missionDetail";
 
 interface IMissionViewProps {
-  id: number;
+  missionId: number;
 }
 
-export default function MissionView({ id }: IMissionViewProps): JSX.Element {
+export default function MissionView({
+  missionId,
+}: IMissionViewProps): JSX.Element {
   const queries = useQueries([
     {
       queryKey: REACT_QUERY_KEY.missionDetail,
-      queryFn: () => fetchData(`/api/missions/${id.toString()}`),
+      queryFn: () => fetchData(`/api/missions/${missionId.toString()}`),
     },
   ]);
 
   const missionData = queries[0].data as IMissionDetail;
 
-  console.log(id);
-  console.log(missionData);
+  console.log(missionId);
+  console.log(queries);
 
   return (
     <>
       <S.Wrapper>
         <S.ContentWrapper>
-          <Title1>Mission Detail</Title1>
           <Title2>{missionData?.title}</Title2>
           <Content1>{missionData?.name}</Content1>
           <TextEditorView content={missionData?.content} />

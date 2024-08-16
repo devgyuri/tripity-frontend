@@ -6,6 +6,7 @@ import { IMissionWriteInput } from "../../../../commons/types/missions/missionWr
 import { Title1 } from "../../../../commons/styles/content.styles";
 import { useMission } from "../../../../commons/hooks/useMission";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/router";
 
 const TextEditor = dynamic(
   () => import("../../../commons/textEditor/TextEditor.index"),
@@ -15,6 +16,8 @@ const TextEditor = dynamic(
 );
 
 export default function MissionWrite(): JSX.Element {
+  const router = useRouter();
+
   const { createMissionMutation } = useMission();
 
   const {
@@ -47,6 +50,7 @@ export default function MissionWrite(): JSX.Element {
       await createMissionMutation.mutateAsync(data, {
         onSuccess: (data) => {
           console.log(data);
+          router.push(`/mission/${data.id.toString()}`);
         },
         onError: (error: any) => {
           const errorRes = error.response;
