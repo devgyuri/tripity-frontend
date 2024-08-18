@@ -120,6 +120,7 @@ export default function SignUpForm(): JSX.Element {
           console.log("+++++ SignUpForm +++++");
           console.log(data);
           alert("회원가입이 완료되었습니다.");
+
           // alert("로그인 해주세요.");
           // router.push("/login");
         },
@@ -131,6 +132,20 @@ export default function SignUpForm(): JSX.Element {
           console.log(error);
         },
       });
+      await loginMutation.mutateAsync(
+        {
+          email: data.email,
+          password: data.password,
+        },
+        {
+          onSuccess: (data) => {
+            router.push("/");
+          },
+          onError: (error: any) => {
+            router.push("/login");
+          },
+        }
+      );
     } catch (error) {
       console.error("sign up api 호출 실패: ", error);
     }
