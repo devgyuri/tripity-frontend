@@ -1,13 +1,13 @@
 import LayoutBody from "../../../src/components/commons/layout/body/LayoutBody.index";
 import LayoutHeader from "../../../src/components/commons/layout/header/LayoutHeader.index";
-import MissionWrite from "../../../src/components/units/mission/write/MissionWrite.index";
+import ArticleWrite from "../../../src/components/units/article/write/ArticleWrite.index";
 
-export default function BoardNewPage(): JSX.Element {
+export default function ArticleNewPage(): JSX.Element {
   return (
     <>
       <LayoutHeader />
       <LayoutBody>
-        <MissionWrite />
+        <ArticleWrite />
       </LayoutBody>
     </>
   );

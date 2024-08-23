@@ -1,17 +1,17 @@
 import { useRouter } from "next/router";
 import LayoutBody from "../../../src/components/commons/layout/body/LayoutBody.index";
 import LayoutHeader from "../../../src/components/commons/layout/header/LayoutHeader.index";
-import MissionView from "../../../src/components/units/mission/view/MissionView.index";
+import ArticleView from "../../../src/components/units/article/view/ArticleView.index";
 
-export default function MissionDetailPage(): JSX.Element {
+export default function ArticleDetailPage(): JSX.Element {
   const router = useRouter();
-  const missionId = Number(router.query.missionId);
+  const articleId = Number(router.query.articleId);
 
   return (
     <>
       <LayoutHeader />
       <LayoutBody>
-        <MissionView missionId={missionId} />
+        <ArticleView articleId={articleId} />
       </LayoutBody>
     </>
   );

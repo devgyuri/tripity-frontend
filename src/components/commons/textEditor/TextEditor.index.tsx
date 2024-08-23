@@ -112,7 +112,7 @@ export default function TextEditor({
       <ReactQuill
         ref={quillRef}
         theme="snow"
-        placeholder="미션 상세 내용을 작성해 주세요."
+        placeholder="내용을 작성해 주세요."
         value={value}
         onChange={onChange}
         modules={modules}

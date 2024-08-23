@@ -234,7 +234,6 @@ export default function SignUpForm(): JSX.Element {
           {errors.password && (
             <S.ErrorMessage>{errors.password.message}</S.ErrorMessage>
           )}
-          <S.Label>비밀번호 확인</S.Label>
           <A.Input
             type="password"
             placeholder="비밀번호를 다시 입력해 주세요."

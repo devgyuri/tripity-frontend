@@ -1,6 +1,5 @@
-export interface IMissionDetail {
+export interface IArticleDetail {
   id: number;
   title: string;
-  name: string;
   content: string;
 }
