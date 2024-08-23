@@ -9,6 +9,7 @@ import { fetchData } from "../../../../commons/utils/fetchData";
 import * as S from "./ArticleView.styles";
 import TextEditorView from "../../../commons/textEditorView/TextEditorView.index";
 import { IArticleDetail } from "../../../../commons/types/articles/articleDetail";
+import { dateToFormat } from "../../../../commons/utils/dateFormat";
 
 interface IArticleViewProps {
   articleId: number;
@@ -34,6 +35,7 @@ export default function ArticleView({
       <S.Wrapper>
         <S.ContentWrapper>
           <Title2>{articleData?.title}</Title2>
+          <Content1>{dateToFormat(articleData?.createdAt)}</Content1>
           <TextEditorView content={articleData?.content} />
         </S.ContentWrapper>
       </S.Wrapper>

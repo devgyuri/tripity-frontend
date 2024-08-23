@@ -7,6 +7,8 @@ import { Title1 } from "../../../../commons/styles/content.styles";
 import { useArticle } from "../../../../commons/hooks/useArticle";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
+import { IArticleWriteProps } from "./ArticleWrite.types";
+import { useEffect } from "react";
 
 const TextEditor = dynamic(
   () => import("../../../commons/textEditor/TextEditor.index"),
@@ -15,22 +17,29 @@ const TextEditor = dynamic(
   }
 );
 
-export default function ArticleWrite(): JSX.Element {
+export default function ArticleWrite({
+  defaultData,
+  isEdit,
+}: IArticleWriteProps): JSX.Element {
   const router = useRouter();
 
-  const { createArticleMutation } = useArticle();
+  const { createArticleMutation, updateArticleMutation } = useArticle();
 
   const {
     register,
     handleSubmit,
     control,
-    getValues,
     formState: { errors, isDirty, isValid },
     setError,
   } = useForm<IArticleWriteInput>({
     mode: "onChange",
-    criteriaMode: "all",
+    defaultValues: {
+      title: defaultData?.title,
+      content: defaultData?.content,
+    },
   });
+
+  console.log(defaultData);
 
   const onSubmit = async (data: IArticleWriteInput) => {
     console.log("article write submit");
@@ -38,34 +47,51 @@ export default function ArticleWrite(): JSX.Element {
     console.log(errors.title);
     console.log(errors.content);
 
-    if (errors.title || errors.content) {
+    if (errors.title) {
       alert(errors.title?.message);
+      return;
+    }
+
+    if (errors.content) {
       alert(errors.content?.message);
       return;
     }
 
+    const writeData: IArticleWriteInput = {
+      ...data,
+    };
+
     try {
-      await createArticleMutation.mutateAsync(data, {
-        onSuccess: (data) => {
-          console.log(data);
-          router.push(`/article/${data.id.toString()}`);
-        },
-        onError: (error: any) => {
-          const errorRes = error.response;
-          setError("root", {
-            message: errorRes.data,
-          });
-        },
-      });
+      if (isEdit) {
+        const articleId = Number(router.query.articleId);
+        await updateArticleMutation.mutateAsync({
+          articleId,
+          updateData: writeData,
+        });
+        router.push(`/article/${articleId.toString()}`);
+      } else {
+        await createArticleMutation.mutateAsync(data, {
+          onSuccess: (data) => {
+            console.log(data);
+            router.push(`/article/${data.id.toString()}`);
+          },
+          onError: (error: any) => {
+            const errorRes = error.response;
+            setError("root", {
+              message: errorRes.data,
+            });
+          },
+        });
+      }
     } catch (error) {
-      console.error("create article 실패: ", error);
+      console.error("article 수정 혹은 생성 실패: ", error);
     }
   };
 
   return (
     <>
       <S.Wrapper>
-        <Title1>새 게시글 작성</Title1>
+        <Title1>{isEdit ? "게시글 수정" : "새 게시글 작성"}</Title1>
         <S.Form onSubmit={handleSubmit(onSubmit)}>
           <NonBorderInput
             type="text"
@@ -99,7 +125,7 @@ export default function ArticleWrite(): JSX.Element {
               isFill={true}
               isDisabled={!isDirty || !isValid}
             >
-              등록하기
+              {isEdit ? "수정하기" : "등록하기"}
             </CustomButton>
           </S.ButtonWrapper>
         </S.Form>
