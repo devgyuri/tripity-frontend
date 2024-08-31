@@ -9,4 +9,7 @@ export const REACT_QUERY_KEY = {
 
   // article
   articleDetail: "articleDetail",
+
+  // comment
+  comments: "comments",
 };
